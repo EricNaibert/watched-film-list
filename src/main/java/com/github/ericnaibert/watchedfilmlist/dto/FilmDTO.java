@@ -1,51 +1,26 @@
-package com.github.ericnaibert.watchedfilmlist.entities;
+package com.github.ericnaibert.watchedfilmlist.dto;
 
-import java.util.Objects;
+import org.springframework.beans.BeanUtils;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import com.github.ericnaibert.watchedfilmlist.entities.Film;
 
-@Entity
-@Table(name = "tb_film")
-public class Film {
+public class FilmDTO {
 	
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String title;
-	
-	@Column(name = "film_year")
 	private Integer year;
 	private String genre;
 	private String streaming;
 	private Double score;
 	private String imgUrl;
-	
-	@Column(columnDefinition = "TEXT")
 	private String shortDescription;
-	
-	@Column(columnDefinition = "TEXT")
 	private String longDescription;
 	
-	public Film() {
-		
+	public FilmDTO() {
 	}
-
-	public Film(Long id, String title, Integer year, String genre, String streaming, Double score, String imgUrl,
-			String shortDescription, String longDescription) {
-		this.id = id;
-		this.title = title;
-		this.year = year;
-		this.genre = genre;
-		this.streaming = streaming;
-		this.score = score;
-		this.imgUrl = imgUrl;
-		this.shortDescription = shortDescription;
-		this.longDescription = longDescription;
+	
+	public FilmDTO(Film entity) {
+		BeanUtils.copyProperties(entity, this);
 	}
 
 	public Long getId() {
@@ -87,7 +62,6 @@ public class Film {
 	public void setStreaming(String streaming) {
 		this.streaming = streaming;
 	}
-	
 
 	public Double getScore() {
 		return score;
@@ -120,25 +94,5 @@ public class Film {
 	public void setLongDescription(String longDescription) {
 		this.longDescription = longDescription;
 	}
-
-	@Override
-	public int hashCode() {
-		return Objects.hash(id);
-	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Film other = (Film) obj;
-		return id == other.id;
-	}
-	
-	
-	
 
 }
